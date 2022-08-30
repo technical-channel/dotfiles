@@ -48,6 +48,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-commentary'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'francoiscabrol/ranger.vim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'ap/vim-css-color'
@@ -75,31 +76,28 @@ Plug 'tkhren/vim-fake'
 Plug 'sheerun/vim-polyglot'
 Plug 'hzchirs/vim-material'
 Plug 'dsznajder/vscode-es7-javascript-react-snippets', { 'do': 'yarn install --frozen-lockfile && yarn compile' }
+"Plugin 'tweekmonster/django-plus.vim'
+Plug 'tomasiser/vim-code-dark'
+Plug 'joshdick/onedark.vim'
+Plug 'eslint/eslint'
+Plug 'mbbill/undotree'
+Plug 'nvie/vim-flake8'
+Plug 'dense-analysis/ale'
+Plug 'isRuslan/vim-es6'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'sollidsnake/vterm'
+Plug 'jmcantrell/vim-virtualenv' 
+Plug 'Yggdroot/indentLine'
+Plug 'chrisbra/csv.vim'
+Plug 'alvan/vim-closetag'
 call plug#end()
-
-call vundle#begin()
-Plugin 'tweekmonster/django-plus.vim'
-Plugin 'tomasiser/vim-code-dark'
-Plugin 'joshdick/onedark.vim'
-Plugin 'eslint/eslint'
-Plugin 'mbbill/undotree'
-Plugin 'nvie/vim-flake8'
-Plugin 'dense-analysis/ale'
-Plugin 'isRuslan/vim-es6'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'sollidsnake/vterm'
-Plugin 'jmcantrell/vim-virtualenv' 
-Plugin 'Yggdroot/indentLine'
-Plugin 'chrisbra/csv.vim'
-Plugin 'alvan/vim-closetag'
-call vundle#end()
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 set background=dark
-colorscheme onedark
+colorscheme dracula
 
 
 if executable('rg')
@@ -194,6 +192,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeGitStatusUpdateOnCursorHold = 1
 map <leader><tab> :NERDTreeToggle<CR>
+
 set completeopt+=menuone   " show the popup menu even when there is only 1 match
 set completeopt+=preview
 
@@ -310,6 +309,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 map <leader>rn <Plug>(coc-rename)
 
+let g:coc_disable_startup_warning = 1
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
@@ -386,7 +386,7 @@ map <leader>f :RangerNewTab<CR>
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 
-let g:airline_theme = 'onedark'
+let g:airline_theme = 'dracula'
 
 let g:airline_powerline_fonts = 1
 let g:codedark_conservative = 1
@@ -441,3 +441,8 @@ function! ChooseTerm(termname, slider)
 	endif
 endfunction
 tnoremap jj <C-\><C-n>
+
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
